@@ -195,6 +195,14 @@ class Datastore:
         """Get node's lat lon"""
         return self.rnodes[node]
 
+    def nodeTags(self, node):
+        """Get node's tags"""
+        return self.ntags[node]
+
+    def wayTags(self, node):
+        """Get way's tags"""
+        return self.wtags[node]
+
     def getArea(self, lat, lon):
         """Download data in the vicinity of a lat/long"""
         # Don't download data if we loaded a custom OSM file
