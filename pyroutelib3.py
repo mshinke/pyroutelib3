@@ -120,6 +120,7 @@ class Datastore:
         self.rnodes = storage_class()
         self.mandatoryMoves = storage_class()
         self.forbiddenMoves = storage_class()
+        self.ntags = storage_class()
 
         # Info about OSM
         self.tiles = storage_class()
@@ -276,7 +277,7 @@ class Datastore:
             wayNodes = []
             for nd in wayData["nd"]:
                 if nd not in nodes: continue
-                wayNodes.append((nodes[nd]["id"], nodes[nd]["lat"], nodes[nd]["lon"]))
+                wayNodes.append((nodes[nd]["id"], nodes[nd]["lat"], nodes[nd]["lon"], nodes[nd]["tag"]))
             self.storeWay(wayId, wayData["tag"], wayNodes)
 
         for relId, relData in relations.items():
@@ -385,12 +386,15 @@ class Datastore:
 
         # Store routing information
         for index in range(1, len(nodes)):
-            node1Id, node1Lat, node1Lon = nodes[index - 1]
-            node2Id, node2Lat, node2Lon = nodes[index]
+            node1Id, node1Lat, node1Lon, node1Tag = nodes[index - 1]
+            node2Id, node2Lat, node2Lon, node2Tag = nodes[index]
 
             # Check if nodes' positions are stored
             if node1Id not in self.rnodes: self.rnodes[node1Id] = (node1Lat, node1Lon)
             if node2Id not in self.rnodes: self.rnodes[node2Id] = (node2Lat, node2Lon)
+
+            if node1Id not in self.ntags: self.ntags[node1Id] = node1Tag
+            if node2Id not in self.ntags: self.ntags[node2Id] = node2Tag
 
             # Check if nodes have dicts for storing travel costs
             if node1Id not in self.routing: self.routing[node1Id] = {}
