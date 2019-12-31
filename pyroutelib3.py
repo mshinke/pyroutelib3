@@ -86,7 +86,12 @@ TYPES = {
         "access": ["access"]},
     "train": {
         "weights": {"rail": 1, "light_rail": 1, "subway": 1, "narrow_guage": 1},
-        "access": ["access"]}
+        "access": ["access"]},
+    "tactile_paving": {
+        "weights": {"yes": 10, "no": 0, "contrasted": 1, "primitive": 0.5,"incorrect": 0},
+        "access": ["access"],
+        "traffic_signals":["traffic_signals:sound","traffic_signals:vibration",
+            "traffic_signals:floor_vibration","traffic_signals:arrow","traffic_signals:minimap"]}    
 }
 
 def _whichTile(lat, lon, zoom):
@@ -365,7 +370,15 @@ class Datastore:
         # Calculate what vehicles can use this route
         weight = self.type["weights"].get(highway, 0) or \
                  self.type["weights"].get(railway, 0)
-
+        
+        # tactile paving route
+        if self.transport == "tactile_paving":
+            tactile_paving = self.equivalent(tags.get("tactile_paving", ""))
+            weight = weight or self.type["weights"].get(tactile_paving, 0)
+            for i in self.type["traffic_signals"]:
+                traffic_signal = self.equivalent(tags.get(i, ""))
+                weight = weight or self.type["weights"].get(traffic_signal, 0)
+        
         # Check against access tags
         if (not self._allowedVehicle(tags)) or weight <= 0:
             return
