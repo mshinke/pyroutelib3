@@ -121,6 +121,7 @@ class Datastore:
         self.mandatoryMoves = storage_class()
         self.forbiddenMoves = storage_class()
         self.ntags = storage_class()
+        self.wtags = storage_class()
 
         # Info about OSM
         self.tiles = storage_class()
@@ -400,13 +401,18 @@ class Datastore:
             if node1Id not in self.routing: self.routing[node1Id] = {}
             if node2Id not in self.routing: self.routing[node2Id] = {}
 
+            if node1Id not in self.wtags: self.wtags[node1Id] = {}
+            if node2Id not in self.wtags: self.wtags[node2Id] = {}
+
             # Is way traversible forward?
             if oneway not in ["-1", "reverse"]:
                 self.routing[node1Id][node2Id] = weight
+                self.wtags[node1Id][node2Id] = tags
 
             # Is way traversible backword?
             if oneway not in ["yes", "true", "1"]:
                 self.routing[node2Id][node1Id] = weight
+                self.wtags[node2Id][node1Id] = tags
 
     def equivalent(self, tag):
         """Simplifies a bunch of tags to nearly-equivalent ones"""
