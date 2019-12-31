@@ -21,7 +21,7 @@ if status == 'success':
     routeLatLons = list(map(router.nodeLatLon, route)) # Get actual route coordinates
 
 ```
-**Transport Modes**: car, cycle, foot, horse, tram, train
+**Transport Modes**: car, cycle, foot, horse, tram, train, tactile_paving
 
 **Statuses**: success, no_route, gave_up
 
