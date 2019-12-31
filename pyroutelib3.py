@@ -5,6 +5,7 @@
 #----------------------------------------------------------------------------
 # Copyright 2007, Oliver White
 # Modifications: Copyright 2017-2019, Mikolaj Kuranowski -
+# Modifications: Copyright 2019, Masataka Shinke 
 # Based on https://github.com/gaulinmp/pyroutelib2
 #----------------------------------------------------------------------------
 # This file is part of pyroutelib3.
@@ -47,14 +48,14 @@ from urllib.request import urlretrieve
 
 __title__ = "pyroutelib3"
 __description__ = "Library for simple routing on OSM data"
-__url__ = "https://github.com/MKuranowski/pyroutelib3"
+__url__ = "https://github.com/mshinke/pyroutelib3"
 __author__ = "Oliver White"
-__copyright__ = "Copyright 2007, Oliver White; Modifications: Copyright 2017-2019, Mikolaj Kuranowski"
-__credits__ = ["Oliver White", "Mikolaj Kuranowski"]
+__copyright__ = "Copyright 2007, Oliver White; Modifications: Copyright 2017-2019, Mikolaj Kuranowski; Modifications: Copyright 2019, Masataka Shinke"
+__credits__ = ["Oliver White", "Mikolaj Kuranowski", "Masataka Shinke"]
 __license__ = "GPL v3"
 __version__ = "1.4"
-__maintainer__ = "Mikolaj Kuranowski"
-__email__ = "mkuranowski@gmail.com"
+__maintainer__ = "Masataka Shinke"
+__email__ = "mshinke@users.sourceforge.jp"
 
 
 TYPES = {
