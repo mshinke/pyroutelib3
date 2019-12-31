@@ -108,7 +108,7 @@ def _tileBoundary(x, y, z):
 
 class Datastore:
     """Object for storing routing data with basic OSM parsing functionality"""
-    def __init__(self, transport, localfile=False, expire_data=30, storage_class=dict):
+    def __init__(self, transport, localfile=False, expire_data=30, storage_class=dict, filepath=""):
         """Initialise an OSM-file parser"""
         # Routing data
         self.routing = storage_class()
@@ -120,6 +120,7 @@ class Datastore:
         self.tiles = storage_class()
         self.expire_data = 86400 * expire_data # expire_data is in days, we preform calculations in seconds
         self.localFile = bool(localfile)
+        self.filepath = filepath
 
         # Parsing/Storage data
         self.storage_class = storage_class
@@ -201,7 +202,7 @@ class Datastore:
 
         # Download tile data
         self.tiles[tileId] = True
-        directory = os.path.join("tilescache", "15", str(x), str(y))
+        directory = os.path.join(self.filepath, "tilescache", "15", str(x), str(y))
         filename = os.path.join(directory, "data.osm")
 
         # Make sure directory to which we download .osm files exists
