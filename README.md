@@ -56,6 +56,7 @@ pyroutelib3 is distributed under GNU GPL v3.
 Copyright 2007, Oliver White
 Modifications: Copyright 2017-2018, Mikolaj Kuranowski -
 Based on https://github.com/gaulinmp/pyroutelib2
+Modifications: Copyright 2019, Masataka Shinke
 
 pyroutelib3 is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
