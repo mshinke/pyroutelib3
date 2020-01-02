@@ -5,7 +5,7 @@
 #----------------------------------------------------------------------------
 # Copyright 2007, Oliver White
 # Modifications: Copyright 2017-2019, Mikolaj Kuranowski -
-# Modifications: Copyright 2019, Masataka Shinke 
+# Modifications: Copyright 2019-2020, Masataka Shinke 
 # Based on https://github.com/gaulinmp/pyroutelib2
 #----------------------------------------------------------------------------
 # This file is part of pyroutelib3.
@@ -128,6 +128,8 @@ class Datastore:
         self.expire_data = 86400 * expire_data # expire_data is in days, we preform calculations in seconds
         self.localFile = bool(localfile)
         self.filepath = filepath
+        self.alive = True
+        self.watchProgress = 0
 
         # Parsing/Storage data
         self.storage_class = storage_class
@@ -238,6 +240,7 @@ class Datastore:
             left, bottom, right, top = _tileBoundary(x, y, 15)
             urlretrieve("https://api.openstreetmap.org/api/0.6/map?bbox={0},{1},{2},{3}".format(left, bottom, right, top), filename)
 
+        self.watchProgress = 0
         self.loadOsm(filename)
 
     def parseOsmFile(self, file):
@@ -256,6 +259,9 @@ class Datastore:
 
         try:
             for event, elem in etree.iterparse(fp):
+                if not self.alive:
+                    break
+                self.watchProgress = (self.watchProgress+1) % 1000000
                 data = self._attributes(elem)
                 data["tag"] = {i.attrib["k"]: i.attrib["v"] for i in elem.iter("tag")}
 
